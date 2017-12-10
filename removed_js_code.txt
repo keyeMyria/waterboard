@@ -1,0 +1,117 @@
+# kknezevic scratch-pad, remove before merge req
+
+
+REMOVED UNUSED FUNCTIONS
+
+
+from contrib removed             'event_mapper/js/validate.js',
+removed event_mapper/js/validate.js
+
+
+event_mapper/static/event_mapper/js/update_movement.js
+
+function update_current(region_name, risk_level, movement_state){
+    $('#current_region').text(region_name);
+    $('#current_risk_level').text(risk_level);
+    $('#current_movement_state').text(movement_state);
+}
+
+
+    if (overall_assessment == 1) {
+        raw_icon = "/static/event_mapper/css/images/red-marker-icon-2x.png";
+    } else if (overall_assessment == 2) {
+        raw_icon = "/static/event_mapper/css/images/orange-marker-icon-2x.png";
+    } else if (overall_assessment == 3) {
+        raw_icon = "/static/event_mapper/css/images/yellow-marker-icon-2x.png";
+    } else if (overall_assessment == 4) {
+        raw_icon = "/static/event_mapper/css/images/lightgreen-marker-icon-2x.png";
+    } else if (overall_assessment == 5) {
+        raw_icon = "/static/event_mapper/css/images/green-marker-icon-2x.png";
+    }
+
+
+
+healthsites/static/js/healthsites_view.js
+
+
+function autofill_form(data) {
+    reset_form();
+    // autofill form
+    $("input[name='healthsite_id']").val(data['healthsite_id']);
+    $("input[name='assessment_id']").val(data['assessment_id']);
+    $("input[name='name']").val(data['name']);
+    $("input[name='latest_data_captor']").val(data['data_captor']);
+    $("input[name='overall_assessment']").val(data['overall_assessment']);
+    var date = "";
+    if (data.created_date) {
+        date = new Date(data.created_date);
+    }
+    $("input[name='latest_update']").val(date);
+    var cleaned_data = {};
+    if (data.assessment) {
+        Object.keys(data.assessment).forEach(function (key) {
+            var value = data.assessment[key]['value'];
+            var keys = key.split("/");
+            if (keys.length > 1) {
+                var group = keys[0];
+                var key = keys[1];
+                if (!cleaned_data[group]) {
+                    cleaned_data[group] = {}
+                }
+                cleaned_data[group][key] = value;
+            }
+        });
+    }
+
+    $('h3[role="tab"]').each(function () {
+        // get group
+        var group = $(this).text();
+        // get all value
+        var tab_panel = $('#' + $(this).attr('aria-controls'));
+        var inputs = $(tab_panel).find('input');
+        for (var i = 0; i < inputs.length; i++) {
+            var key = $(inputs[i]).attr("name");
+            if (cleaned_data[group] && cleaned_data[group][key]) {
+                $(inputs[i]).val(cleaned_data[group][key]);
+            }
+        }
+        var inputs = $(tab_panel).find('select');
+        for (var i = 0; i < inputs.length; i++) {
+            var input = inputs[i];
+            var key = $(inputs[i]).attr("name");
+            if (cleaned_data[group] && cleaned_data[group][key]) {
+                var value = cleaned_data[group][key];
+                var values = value.split(',');
+                for (var j = 0; j < values.length; j++) {
+                    var option = $(input).find("option[value='" + values[j] + "']");
+                    $(option).prop('selected', true);
+                }
+            }
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+event_mapper/static/event_mapper/js/event_dashboard.js
+
+
+function show_side_panel() {
+    if (!$('#side_panel').is(":visible")) {
+        toggle_side_panel();
+    }
+}
+function hide_side_panel() {
+    if ($('#side_panel').is(":visible")) {
+        toggle_side_panel();
+    }
+}

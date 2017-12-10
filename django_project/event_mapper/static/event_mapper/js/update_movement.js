@@ -6,11 +6,6 @@
 var current_region;
 var risk_level_colors = ['white', 'lime', 'yellow', 'red', 'black'];
 
-function update_current(region_name, risk_level, movement_state){
-    $('#current_region').text(region_name);
-    $('#current_risk_level').text(risk_level);
-    $('#current_movement_state').text(movement_state);
-}
 
 function add_current_region_geojson(geojson_data, risk_level_id){
     if (current_region){

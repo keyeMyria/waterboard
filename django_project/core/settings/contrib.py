@@ -54,7 +54,6 @@ PIPELINE_JS = {
             'event_mapper/js/leaflet.js',
             'event_mapper/js/material.js',
             'event_mapper/js/ripples.js',
-            'event_mapper/js/validate.js',
             'event_mapper/js/jquery.flot.min.js',
             'event_mapper/js/jquery.flot.time.min.js',
             'event_mapper/js/jquery-ui.js',

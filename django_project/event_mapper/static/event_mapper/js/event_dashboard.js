@@ -128,16 +128,7 @@ function show_detail(marker) {
 }
 
 
-function show_side_panel() {
-    if (!$('#side_panel').is(":visible")) {
-        toggle_side_panel();
-    }
-}
-function hide_side_panel() {
-    if ($('#side_panel').is(":visible")) {
-        toggle_side_panel();
-    }
-}
+
 
 function map_clicked() {
     show_dashboard();
@@ -569,6 +560,25 @@ function renderOverallAssessments(list) {
 // --------------------------------------------------------------------
 // ASSESSMENT
 // --------------------------------------------------------------------
+
+const OVERALL_ASSESSMENT_TYPES = {
+    '1': {
+        img: '/static/event_mapper/css/images/red-marker-icon-2x.png'
+    },
+    '2': {
+        img: '/static/event_mapper/css/images/orange-marker-icon-2x.png'
+    },
+    '3': {
+        img: '/static/event_mapper/css/images/yellow-marker-icon-2x.png'
+    },
+    '4': {
+        img: '/static/event_mapper/css/images/lightgreen-marker-icon-2x.png'
+    },
+    '5': {
+        img: '/static/event_mapper/css/images/green-marker-icon-2x.png'
+    }
+};
+
 function add_event_marker(event_context) {
     // Variables
     var event_icon;
@@ -584,18 +594,8 @@ function add_event_marker(event_context) {
     var overall_assessment = event_context['overall_assessment'];
     var enriched = event_context['enriched'];
 
-    var raw_icon;
-    if (overall_assessment == 1) {
-        raw_icon = "/static/event_mapper/css/images/red-marker-icon-2x.png";
-    } else if (overall_assessment == 2) {
-        raw_icon = "/static/event_mapper/css/images/orange-marker-icon-2x.png";
-    } else if (overall_assessment == 3) {
-        raw_icon = "/static/event_mapper/css/images/yellow-marker-icon-2x.png";
-    } else if (overall_assessment == 4) {
-        raw_icon = "/static/event_mapper/css/images/lightgreen-marker-icon-2x.png";
-    } else if (overall_assessment == 5) {
-        raw_icon = "/static/event_mapper/css/images/green-marker-icon-2x.png";
-    }
+    var raw_icon = OVERALL_ASSESSMENT_TYPES[overall_assessment] || '';
+
     var latlng = L.latLng(lat, lng);
     var is_selected = is_selected_marker(event_id, 'assessment');
     if (is_selected) {
@@ -639,7 +639,7 @@ function add_event_marker(event_context) {
     });
     // create popup
     {
-        var html = "<center><b>" + assessment_name + "</b></center>";
+        var html = "<b>" + assessment_name + "</b>";
         var popup = L.popup()
             .setContent(html);
         var options =
